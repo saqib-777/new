@@ -33,4 +33,4 @@ export const signUp = async (email: string, password: string, profile: any) => {
 export const signOut = async () => {
   const { error } = await supabase.auth.signOut();
   return { error };
-};</parameter>
+};
