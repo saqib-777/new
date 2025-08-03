@@ -400,4 +400,4 @@ export const DonatePage = () => {
       </div>
     </div>
   );
-};</parameter>
+};
