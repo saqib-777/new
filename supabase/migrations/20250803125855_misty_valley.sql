@@ -60,4 +60,4 @@ CREATE POLICY "Staff can view all contact messages"
 CREATE POLICY "Anyone can create contact messages"
   ON contact_messages
   FOR INSERT
-  WITH CHECK (true);</parameter>
+  WITH CHECK (true);
