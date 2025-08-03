@@ -150,4 +150,4 @@ export const Footer = () => {
       </div>
     </footer>
   );
-};</parameter>
+};
