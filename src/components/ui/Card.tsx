@@ -49,4 +49,4 @@ export const CardContent = ({ children, className = '' }: { children: React.Reac
   <div className={className}>
     {children}
   </div>
-);</parameter>
+);
