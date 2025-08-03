@@ -337,4 +337,4 @@ export const AdoptPage = () => {
       </div>
     </div>
   );
-};</parameter>
+};
