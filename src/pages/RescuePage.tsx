@@ -411,4 +411,4 @@ export const RescuePage = () => {
       </div>
     </div>
   );
-};</parameter>
+};
