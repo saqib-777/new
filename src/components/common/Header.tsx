@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Heart, Menu, X, User, Bell, Home, Search, Phone, Hand as Hands, DollarSign, Shield } from 'lucide-react';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '../../hooks/useAuth.tsx';
 import { useAppStore } from '../../store/useAppStore';
 
 export const Header = () => {
