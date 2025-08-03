@@ -26,4 +26,4 @@ export const PageLoader = () => {
       </div>
     </div>
   );
-};</parameter>
+};
