@@ -15,4 +15,4 @@ export const HomePage = () => {
       <CallToAction />
     </div>
   );
-};</parameter>
+};
