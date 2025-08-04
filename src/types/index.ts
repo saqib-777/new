@@ -69,21 +69,43 @@ export interface AdoptionApplication {
   animalId: string;
   applicantId: string;
   applicationNumber: string;
-  housingType: 'house' | 'apartment' | 'farm' | 'other';
-  housingOwned: boolean;
-  yardAvailable: boolean;
-  yardFenced: boolean;
-  petExperience: string;
-  currentPets: any[];
-  householdMembers: number;
-  childrenAges: number[];
-  workSchedule: string;
-  travelFrequency?: string;
-  exercisePlan?: string;
-  trainingCommitment: boolean;
-  veterinaryPlan?: string;
-  emergencyContact: any;
-  references: any[];
+  personalInfo: {
+    fullName: string;
+    email: string;
+    phone: string;
+    address: string;
+    age: number;
+    occupation: string;
+  };
+  housingInfo: {
+    type: 'house' | 'apartment' | 'farm' | 'other';
+    owned: boolean;
+    yardAvailable: boolean;
+    yardFenced: boolean;
+  };
+  experienceInfo: {
+    petExperience: string;
+    currentPets: any[];
+    householdMembers: number;
+    childrenAges: number[];
+    workSchedule: string;
+    travelFrequency: string;
+  };
+  careCommitment: {
+    exercisePlan: string;
+    trainingCommitment: boolean;
+    veterinaryBudget: number;
+    emergencyContact: {
+      name: string;
+      phone: string;
+      relationship: string;
+    };
+  };
+  references: {
+    name: string;
+    phone: string;
+    relationship: string;
+  }[];
   status: 'submitted' | 'under_review' | 'approved' | 'rejected' | 'on_hold';
   reviewerId?: string;
   reviewNotes?: string;
@@ -100,17 +122,20 @@ export interface Donation {
   currency: string;
   donationType: 'one-time' | 'monthly';
   purpose: 'general' | 'medical' | 'food' | 'shelter' | 'emergency';
-  donorName?: string;
-  donorEmail?: string;
-  donorPhone?: string;
-  anonymous: boolean;
-  paymentMethod: 'stripe' | 'paypal' | 'jazzcash' | 'easypaisa' | 'bank_transfer';
+  donorInfo: {
+    name: string;
+    email: string;
+    phone?: string;
+    address?: string;
+    anonymous: boolean;
+    newsletterOptIn: boolean;
+  };
+  paymentMethod: 'jazzcash' | 'easypaisa' | 'bank_transfer' | 'paypal' | 'stripe';
   paymentId?: string;
   transactionId?: string;
   status: 'pending' | 'completed' | 'failed' | 'refunded';
   processedAt?: string;
   failureReason?: string;
-  publicRecognition: boolean;
   receiptSent: boolean;
   thankYouSent: boolean;
   createdAt: string;
@@ -121,18 +146,36 @@ export interface VolunteerApplication {
   id: string;
   applicantId: string;
   applicationNumber: string;
-  age: number;
-  occupation?: string;
-  emergencyContact: any;
+  personalInfo: {
+    fullName: string;
+    email: string;
+    phone: string;
+    address: string;
+    age: number;
+    occupation?: string;
+  };
+  availability: {
+    days: string[];
+    hours: string;
+    frequency: 'weekly' | 'bi-weekly' | 'monthly' | 'event-based';
+  };
   interests: string[];
   skills: string[];
-  availabilityDays: string[];
-  availabilityHours: string;
-  frequencyPreference: 'weekly' | 'bi-weekly' | 'monthly' | 'event-based';
-  animalExperience?: string;
-  volunteerExperience?: string;
-  physicalLimitations?: string;
-  references: any[];
+  experience: {
+    animalExperience?: string;
+    volunteerExperience?: string;
+    physicalLimitations?: string;
+  };
+  emergencyContact: {
+    name: string;
+    phone: string;
+    relationship: string;
+  };
+  references: {
+    name: string;
+    phone: string;
+    relationship: string;
+  }[];
   backgroundCheckConsent: boolean;
   backgroundCheckCompleted: boolean;
   status: 'submitted' | 'under_review' | 'interview_scheduled' | 'background_check' | 'approved' | 'rejected' | 'inactive';
@@ -173,6 +216,8 @@ export interface SearchFilters {
   goodWith: string[];
   sortBy: 'name' | 'age' | 'date_added' | 'adoption_fee';
   sortOrder: 'asc' | 'desc';
+  page: number;
+  limit: number;
 }
 
 export interface Notification {
@@ -184,4 +229,46 @@ export interface Notification {
   data?: any;
   read: boolean;
   createdAt: string;
-}</parameter>
+}
+
+export interface SuccessStory {
+  id: string;
+  animalId?: string;
+  title: string;
+  story: string;
+  rescueDate?: string;
+  adoptionDate?: string;
+  beforeImages: string[];
+  afterImages: string[];
+  adopterName?: string;
+  adopterTestimonial?: string;
+  adopterImage?: string;
+  featured: boolean;
+  published: boolean;
+  viewsCount: number;
+  sharesCount: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface TeamMember {
+  id: string;
+  name: string;
+  role: string;
+  specialization?: string;
+  experienceYears?: number;
+  education?: string;
+  bio: string;
+  imageUrl: string;
+  email?: string;
+  phone?: string;
+  socialLinks?: {
+    facebook?: string;
+    twitter?: string;
+    linkedin?: string;
+  };
+  active: boolean;
+  displayOrder: number;
+  createdAt: string;
+  updatedAt: string;
+}

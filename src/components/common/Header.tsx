@@ -1,69 +1,97 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Heart, Menu, X, User, Bell, Home, Search, Phone, Hand as Hands, DollarSign, Shield } from 'lucide-react';
-import { useAuth } from '../../hooks/useAuth.tsx';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { Heart, Menu, X, Phone, User, Bell } from 'lucide-react';
+import { useAuth } from '../../hooks/useAuth';
 import { useAppStore } from '../../store/useAppStore';
 
 export const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { user, signOut } = useAuth();
-  const { notifications, toggleSidebar } = useAppStore();
-  const navigate = useNavigate();
+  const { notifications } = useAppStore();
+  const location = useLocation();
 
   const navigation = [
-    { name: 'Home', href: '/', icon: Home },
-    { name: 'Adopt', href: '/adopt', icon: Heart },
-    { name: 'Rescue', href: '/rescue', icon: Shield },
-    { name: 'Volunteer', href: '/volunteer', icon: Hands },
-    { name: 'Donate', href: '/donate', icon: DollarSign },
-    { name: 'Contact', href: '/contact', icon: Phone },
+    { name: 'Home', href: '/' },
+    { name: 'About', href: '/about' },
+    { name: 'Adopt', href: '/adopt' },
+    { name: 'Rescue', href: '/rescue' },
+    { name: 'Donate', href: '/donate' },
+    { name: 'Volunteer', href: '/volunteer' },
+    { name: 'Contact', href: '/contact' },
   ];
 
   const unreadCount = notifications.filter(n => !n.read).length;
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const isActive = (path: string) => {
+    if (path === '/') return location.pathname === '/';
+    return location.pathname.startsWith(path);
+  };
+
   return (
-    <header className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
+    <header 
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled 
+          ? 'bg-white/95 backdrop-blur-md shadow-lg' 
+          : 'bg-white/90 backdrop-blur-sm'
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-primary-500 rounded-lg flex items-center justify-center">
+          <Link to="/" className="flex items-center space-x-3 group">
+            <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-600 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform">
               <Heart className="w-6 h-6 text-white" />
             </div>
             <div className="hidden sm:block">
-              <h1 className="text-xl font-bold text-gray-900">Rescue The Voiceless</h1>
+              <h1 className="text-xl font-bold text-gray-900 group-hover:text-primary-600 transition-colors">
+                Rescue The Voiceless
+              </h1>
               <p className="text-xs text-gray-600">Saving Lives, One Rescue at a Time</p>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex space-x-8">
+          <nav className="hidden lg:flex space-x-1">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 to={item.href}
-                className="flex items-center space-x-2 px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-md transition-colors"
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+                  isActive(item.href)
+                    ? 'bg-primary-100 text-primary-700 shadow-sm'
+                    : 'text-gray-700 hover:text-primary-600 hover:bg-primary-50'
+                }`}
               >
-                <item.icon className="w-4 h-4" />
-                <span>{item.name}</span>
+                {item.name}
               </Link>
             ))}
           </nav>
 
-          {/* Right side actions */}
+          {/* Emergency Button & User Actions */}
           <div className="flex items-center space-x-4">
-            {/* Search */}
-            <button className="p-2 text-gray-400 hover:text-gray-500">
-              <Search className="w-5 h-5" />
-            </button>
+            {/* Emergency Button */}
+            <a
+              href="tel:1122"
+              className="hidden md:flex items-center space-x-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-semibold transition-colors animate-bounce-gentle"
+            >
+              <Phone className="w-4 h-4" />
+              <span>Emergency: 1122</span>
+            </a>
 
             {user ? (
               <>
                 {/* Notifications */}
-                <button 
-                  className="relative p-2 text-gray-400 hover:text-gray-500"
-                  onClick={toggleSidebar}
-                >
+                <button className="relative p-2 text-gray-400 hover:text-gray-500 transition-colors">
                   <Bell className="w-5 h-5" />
                   {unreadCount > 0 && (
                     <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
@@ -72,15 +100,18 @@ export const Header = () => {
                   )}
                 </button>
 
-                {/* User menu */}
+                {/* User Menu */}
                 <div className="relative group">
                   <button className="flex items-center space-x-2 text-sm">
                     <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center">
                       <User className="w-4 h-4 text-primary-600" />
                     </div>
+                    <span className="hidden md:block font-medium text-gray-700">
+                      {user.firstName || 'User'}
+                    </span>
                   </button>
                   
-                  {/* Dropdown menu */}
+                  {/* Dropdown */}
                   <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                     <div className="py-1">
                       <Link
@@ -109,7 +140,7 @@ export const Header = () => {
               <div className="flex items-center space-x-2">
                 <Link
                   to="/login"
-                  className="text-sm font-medium text-gray-700 hover:text-primary-600"
+                  className="text-sm font-medium text-gray-700 hover:text-primary-600 transition-colors"
                 >
                   Sign In
                 </Link>
@@ -124,7 +155,7 @@ export const Header = () => {
 
             {/* Mobile menu button */}
             <button
-              className="lg:hidden p-2 text-gray-400 hover:text-gray-500"
+              className="lg:hidden p-2 text-gray-400 hover:text-gray-500 transition-colors"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               {mobileMenuOpen ? (
@@ -138,20 +169,35 @@ export const Header = () => {
 
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
-          <div className="lg:hidden border-t border-gray-200 py-4">
+          <div className="lg:hidden border-t border-gray-200 py-4 animate-slide-up">
             <nav className="space-y-2">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
                   to={item.href}
-                  className="flex items-center space-x-3 px-3 py-2 text-base font-medium text-gray-700 hover:text-primary-600 hover:bg-primary-50 rounded-md"
+                  className={`block px-3 py-2 text-base font-medium rounded-md transition-colors ${
+                    isActive(item.href)
+                      ? 'bg-primary-100 text-primary-700'
+                      : 'text-gray-700 hover:text-primary-600 hover:bg-primary-50'
+                  }`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  <item.icon className="w-5 h-5" />
-                  <span>{item.name}</span>
+                  {item.name}
                 </Link>
               ))}
             </nav>
+            
+            {/* Mobile Emergency Button */}
+            <div className="mt-4 pt-4 border-t border-gray-200">
+              <a
+                href="tel:1122"
+                className="flex items-center justify-center space-x-2 bg-red-600 text-white py-3 rounded-md font-semibold"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <Phone className="w-5 h-5" />
+                <span>Emergency: 1122</span>
+              </a>
+            </div>
             
             {!user && (
               <div className="mt-4 pt-4 border-t border-gray-200 space-y-2">
