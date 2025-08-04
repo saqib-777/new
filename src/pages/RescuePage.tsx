@@ -24,6 +24,7 @@ type RescueFormData = z.infer<typeof rescueSchema>;
 export const RescuePage = () => {
   const [images, setImages] = useState<File[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [location, setLocation] = useState<{lat: number, lng: number} | null>(null);
 
   const {
     register,
@@ -95,26 +96,58 @@ export const RescuePage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Emergency Banner */}
-      <div className="bg-red-600 text-white">
+      <div className="bg-red-600 text-white animate-pulse">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-center space-x-4">
             <Shield className="w-6 h-6" />
-            <span className="font-semibold">24/7 Emergency Hotline: +92 311 RESCUE</span>
+            <span className="font-bold text-lg">24/7 Emergency Hotline: 1122</span>
             <span className="hidden sm:inline">|</span>
             <span className="hidden sm:inline">For immediate assistance, call now!</span>
           </div>
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {/* Hero Section */}
+      <div 
+        className="relative bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: 'url(https://images.pexels.com/photos/6816869/pexels-photo-6816869.jpeg?auto=compress&cs=tinysrgb&w=1920&h=600&fit=crop)'
+        }}
+      >
+        <div className="absolute inset-0 bg-black/50" />
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="text-center">
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              Report Animal Emergency
+            </h1>
+            <p className="text-lg text-white/90 max-w-2xl mx-auto">
+              Found an animal in need? Report it here and our rescue team will respond as quickly as possible.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Report Animal Rescue
-          </h1>
-          <p className="text-lg text-gray-600">
-            Found an animal in need? Report it here and our rescue team will respond as quickly as possible.
-          </p>
+        <div className="text-center mb-8 bg-white rounded-lg shadow-sm p-6">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">Emergency Contacts</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="text-center">
+              <Phone className="w-8 h-8 text-red-600 mx-auto mb-2" />
+              <p className="font-bold text-red-600 text-xl">1122</p>
+              <p className="text-sm text-gray-600">Emergency Hotline</p>
+            </div>
+            <div className="text-center">
+              <Mail className="w-8 h-8 text-blue-600 mx-auto mb-2" />
+              <p className="font-bold text-blue-600">RescueTheVoiceless07@gmail.com</p>
+              <p className="text-sm text-gray-600">Email Support</p>
+            </div>
+            <div className="text-center">
+              <MessageCircle className="w-8 h-8 text-green-600 mx-auto mb-2" />
+              <p className="font-bold text-green-600">+92 339 6063 777</p>
+              <p className="text-sm text-gray-600">WhatsApp</p>
+            </div>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -192,10 +225,37 @@ export const RescuePage = () => {
                   {/* Location */}
                   <Input
                     label="Location Address *"
-                    placeholder="Provide detailed address with landmarks"
+                    placeholder="Provide detailed address with landmarks (e.g., Near Main Market, Gulberg III, Lahore)"
                     {...register('locationAddress')}
                     error={errors.locationAddress?.message}
                   />
+                  
+                  {/* GPS Location Button */}
+                  <div className="flex items-center space-x-4">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (navigator.geolocation) {
+                          navigator.geolocation.getCurrentPosition((position) => {
+                            setLocation({
+                              lat: position.coords.latitude,
+                              lng: position.coords.longitude
+                            });
+                            toast.success('Location captured successfully!');
+                          });
+                        }
+                      }}
+                      className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                    >
+                      <MapPin className="w-4 h-4" />
+                      <span>Get My Location</span>
+                    </button>
+                    {location && (
+                      <span className="text-sm text-green-600 font-medium">
+                        ✓ GPS Location Captured
+                      </span>
+                    )}
+                  </div>
 
                   {/* Contact Information */}
                   <div className="space-y-4">

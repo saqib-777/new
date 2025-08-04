@@ -88,13 +88,19 @@ export const DonatePage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="bg-gradient-to-r from-primary-600 to-secondary-600 text-white">
+      <div 
+        className="relative bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: 'url(https://images.pexels.com/photos/6816869/pexels-photo-6816869.jpeg?auto=compress&cs=tinysrgb&w=1920&h=600&fit=crop)'
+        }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-600/80 to-secondary-600/80" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="text-center">
+          <div className="relative z-10 text-center">
             <h1 className="text-3xl md:text-4xl font-bold mb-4">
               Make a Life-Saving Donation
             </h1>
-            <p className="text-lg text-primary-100 max-w-2xl mx-auto">
+            <p className="text-lg text-white/90 max-w-2xl mx-auto">
               Your generosity directly impacts the lives of rescued animals. Every donation helps us provide 
               medical care, food, shelter, and love to animals in need.
             </p>
@@ -148,6 +154,8 @@ export const DonatePage = () => {
                     <label className="block text-sm font-medium text-gray-700 mb-3">
                       Donation Amount (PKR)
                     </label>
+                    
+                    {/* Quick Amount Buttons */}
                     <div className="grid grid-cols-3 md:grid-cols-5 gap-3 mb-4">
                       {donationAmounts.map((preset) => (
                         <button
@@ -155,7 +163,7 @@ export const DonatePage = () => {
                           onClick={() => handleAmountSelect(preset)}
                           className={`p-3 border rounded-lg text-center font-medium transition-colors ${
                             amount === preset
-                              ? 'border-primary-500 bg-primary-50 text-primary-700'
+                              ? 'border-primary-500 bg-primary-50 text-primary-700 ring-2 ring-primary-200'
                               : 'border-gray-200 hover:border-gray-300'
                           }`}
                         >
@@ -164,12 +172,14 @@ export const DonatePage = () => {
                       ))}
                     </div>
                     
+                    {/* Custom Amount Input */}
                     <Input
                       placeholder="Enter custom amount"
                       type="number"
                       value={customAmount}
                       onChange={(e) => handleCustomAmountChange(e.target.value)}
                       min="100"
+                      helper="Minimum donation amount is Rs. 100"
                     />
                   </div>
 
@@ -245,7 +255,53 @@ export const DonatePage = () => {
                     <label className="block text-sm font-medium text-gray-700 mb-3">
                       Payment Method
                     </label>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    
+                    {/* Local Payment Methods */}
+                    <div className="mb-4">
+                      <h4 className="text-sm font-medium text-gray-600 mb-2">Local Payment Methods (Pakistan)</h4>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <button
+                          onClick={() => setPaymentMethod('jazzcash')}
+                          className={`p-4 border rounded-lg text-center transition-colors ${
+                            paymentMethod === 'jazzcash'
+                              ? 'border-primary-500 bg-primary-50'
+                              : 'border-gray-200 hover:border-gray-300'
+                          }`}
+                        >
+                          <div className="font-medium text-orange-600">JazzCash</div>
+                          <div className="text-sm text-gray-600">Mobile wallet</div>
+                        </button>
+                        
+                        <button
+                          onClick={() => setPaymentMethod('easypaisa')}
+                          className={`p-4 border rounded-lg text-center transition-colors ${
+                            paymentMethod === 'easypaisa'
+                              ? 'border-primary-500 bg-primary-50'
+                              : 'border-gray-200 hover:border-gray-300'
+                          }`}
+                        >
+                          <div className="font-medium text-green-600">EasyPaisa</div>
+                          <div className="text-sm text-gray-600">Mobile wallet</div>
+                        </button>
+                        
+                        <button
+                          onClick={() => setPaymentMethod('bank_transfer')}
+                          className={`p-4 border rounded-lg text-center transition-colors ${
+                            paymentMethod === 'bank_transfer'
+                              ? 'border-primary-500 bg-primary-50'
+                              : 'border-gray-200 hover:border-gray-300'
+                          }`}
+                        >
+                          <div className="font-medium text-blue-600">Bank Transfer</div>
+                          <div className="text-sm text-gray-600">HBL, UBL, MCB</div>
+                        </button>
+                      </div>
+                    </div>
+                    
+                    {/* International Payment Methods */}
+                    <div>
+                      <h4 className="text-sm font-medium text-gray-600 mb-2">International Payment Methods</h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       {paymentMethods.map((method) => (
                         <button
                           key={method.id}
@@ -265,6 +321,7 @@ export const DonatePage = () => {
                           </div>
                         </button>
                       ))}
+                      </div>
                     </div>
                   </div>
 

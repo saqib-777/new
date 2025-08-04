@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, Filter, Heart, Clock, MapPin } from 'lucide-react';
+import { Search, Filter, Heart, Clock, MapPin, Star, Award } from 'lucide-react';
 import { Card, CardContent } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { useAppStore } from '../store/useAppStore';
+import { AdoptionModal } from '../components/adoption/AdoptionModal';
 
 const mockAnimals = [
   {
@@ -96,6 +97,10 @@ const mockAnimals = [
 export const AdoptPage = () => {
   const { searchFilters, updateSearchFilters } = useAppStore();
   const [showFilters, setShowFilters] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedAnimal, setSelectedAnimal] = useState<any>(null);
+  const [showAdoptionModal, setShowAdoptionModal] = useState(false);
+  const animalsPerPage = 12;
 
   const filteredAnimals = mockAnimals.filter(animal => {
     if (searchFilters.type !== 'all' && animal.type !== searchFilters.type) return false;
@@ -111,16 +116,27 @@ export const AdoptPage = () => {
     return true;
   });
 
+  // Pagination
+  const totalPages = Math.ceil(filteredAnimals.length / animalsPerPage);
+  const startIndex = (currentPage - 1) * animalsPerPage;
+  const paginatedAnimals = filteredAnimals.slice(startIndex, startIndex + animalsPerPage);
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200">
+      <div 
+        className="relative bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: 'url(https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&w=1920&h=600&fit=crop)'
+        }}
+      >
+        <div className="absolute inset-0 bg-black/50" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="text-center">
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <div className="relative z-10 text-center">
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
               Find Your Perfect Companion
             </h1>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <p className="text-lg text-white/90 max-w-2xl mx-auto">
               Every animal deserves a loving home. Browse our available pets and discover your new best friend.
             </p>
           </div>
@@ -232,33 +248,45 @@ export const AdoptPage = () => {
         {/* Results */}
         <div className="mb-6">
           <p className="text-gray-600">
-            Showing {filteredAnimals.length} animal{filteredAnimals.length !== 1 ? 's' : ''} available for adoption
+            Showing {startIndex + 1}-{Math.min(startIndex + animalsPerPage, filteredAnimals.length)} of {filteredAnimals.length} animals available for adoption
           </p>
         </div>
 
         {/* Animals Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredAnimals.map((animal) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {paginatedAnimals.map((animal) => (
             <Card key={animal.id} hover className="group overflow-hidden">
               <div className="relative">
                 <img
                   src={animal.image}
                   alt={animal.name}
-                  className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute top-4 right-4">
-                  <button className="w-10 h-10 bg-white/90 rounded-full flex items-center justify-center hover:bg-white transition-colors">
+                
+                {/* Favorite Button */}
+                <div className="absolute top-3 right-3">
+                  <button className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-all duration-200 shadow-lg">
                     <Heart className="w-5 h-5 text-gray-600 hover:text-red-500" />
                   </button>
                 </div>
-                <div className="absolute bottom-4 left-4 bg-white/90 rounded-full px-3 py-1">
+                
+                {/* Animal Type Badge */}
+                <div className="absolute bottom-3 left-3 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 shadow-lg">
                   <span className="text-sm font-medium text-gray-900 capitalize">{animal.type}</span>
                 </div>
+                
+                {/* Special Needs Badge */}
                 {animal.specialNeeds && (
-                  <div className="absolute top-4 left-4 bg-yellow-500 text-white text-xs px-2 py-1 rounded">
+                  <div className="absolute top-3 left-3 bg-yellow-500 text-white text-xs px-2 py-1 rounded-full font-medium shadow-lg">
                     Special Needs
                   </div>
                 )}
+                
+                {/* Featured Badge */}
+                <div className="absolute top-3 left-1/2 transform -translate-x-1/2 bg-primary-500 text-white text-xs px-2 py-1 rounded-full font-medium shadow-lg flex items-center space-x-1">
+                  <Star className="w-3 h-3" />
+                  <span>Featured</span>
+                </div>
               </div>
               
               <CardContent className="p-6">
@@ -300,10 +328,15 @@ export const AdoptPage = () => {
                     <span className="text-lg font-bold text-primary-600">
                       Rs. {animal.adoptionFee.toLocaleString()}
                     </span>
-                    <Button asChild size="sm">
-                      <Link to={`/adopt/animal/${animal.id}`}>
-                        View Details
-                      </Link>
+                    <Button 
+                      size="sm" 
+                      className="bg-primary-600 hover:bg-primary-700"
+                      onClick={() => {
+                        setSelectedAnimal(animal);
+                        setShowAdoptionModal(true);
+                      }}
+                    >
+                        Adopt Me
                     </Button>
                   </div>
                 </div>
@@ -311,6 +344,41 @@ export const AdoptPage = () => {
             </Card>
           ))}
         </div>
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="flex justify-center items-center space-x-2 mt-12">
+            <button
+              onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+              className="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Previous
+            </button>
+            
+            {[...Array(totalPages)].map((_, index) => (
+              <button
+                key={index + 1}
+                onClick={() => setCurrentPage(index + 1)}
+                className={`px-4 py-2 rounded-lg text-sm font-medium ${
+                  currentPage === index + 1
+                    ? 'bg-primary-600 text-white'
+                    : 'border border-gray-300 text-gray-700 hover:bg-gray-50'
+                }`}
+              >
+                {index + 1}
+              </button>
+            ))}
+            
+            <button
+              onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+              disabled={currentPage === totalPages}
+              className="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Next
+            </button>
+          </div>
+        )}
 
         {filteredAnimals.length === 0 && (
           <div className="text-center py-12">
@@ -333,6 +401,18 @@ export const AdoptPage = () => {
               Clear Filters
             </Button>
           </div>
+        )}
+        
+        {/* Adoption Modal */}
+        {selectedAnimal && (
+          <AdoptionModal
+            isOpen={showAdoptionModal}
+            onClose={() => {
+              setShowAdoptionModal(false);
+              setSelectedAnimal(null);
+            }}
+            animal={selectedAnimal}
+          />
         )}
       </div>
     </div>

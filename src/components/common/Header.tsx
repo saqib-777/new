@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Heart, Menu, X, Phone, User, Bell } from 'lucide-react';
+import { Heart, Menu, X, Phone, User, Bell, Zap } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { useAppStore } from '../../store/useAppStore';
 
@@ -49,7 +49,7 @@ export const Header = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3 group">
-            <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-600 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform">
+            <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl flex items-center justify-center group-hover:scale-105 transition-transform shadow-lg">
               <Heart className="w-6 h-6 text-white" />
             </div>
             <div className="hidden sm:block">
@@ -82,9 +82,9 @@ export const Header = () => {
             {/* Emergency Button */}
             <a
               href="tel:1122"
-              className="hidden md:flex items-center space-x-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-semibold transition-colors animate-bounce-gentle"
+              className="hidden md:flex items-center space-x-2 bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg text-sm font-bold transition-all duration-200 shadow-lg hover:shadow-xl animate-pulse"
             >
-              <Phone className="w-4 h-4" />
+              <Zap className="w-4 h-4" />
               <span>Emergency: 1122</span>
             </a>
 

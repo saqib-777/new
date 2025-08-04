@@ -54,13 +54,19 @@ export const ContactPage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200">
+      <div 
+        className="relative bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: 'url(https://images.pexels.com/photos/6235233/pexels-photo-6235233.jpeg?auto=compress&cs=tinysrgb&w=1920&h=600&fit=crop)'
+        }}
+      >
+        <div className="absolute inset-0 bg-black/50" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="text-center">
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <div className="relative z-10 text-center">
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
               Get in Touch
             </h1>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <p className="text-lg text-white/90 max-w-2xl mx-auto">
               Have questions about adoption, volunteering, or need help with a rescue? 
               We're here to help and would love to hear from you.
             </p>

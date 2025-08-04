@@ -320,20 +320,26 @@ export const VolunteerPage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="bg-gradient-to-r from-primary-600 to-secondary-600 text-white">
+      <div 
+        className="relative bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: 'url(https://images.pexels.com/photos/6816869/pexels-photo-6816869.jpeg?auto=compress&cs=tinysrgb&w=1920&h=600&fit=crop)'
+        }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-600/80 to-secondary-600/80" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="text-center">
+          <div className="relative z-10 text-center">
             <h1 className="text-3xl md:text-4xl font-bold mb-4">
               Join Our Volunteer Team
             </h1>
-            <p className="text-lg text-primary-100 max-w-2xl mx-auto mb-8">
+            <p className="text-lg text-white/90 max-w-2xl mx-auto mb-8">
               Make a difference in the lives of rescued animals. Join our passionate team of volunteers 
               and help us create more success stories.
             </p>
             <Button
               onClick={() => setShowApplication(true)}
               size="lg"
-              className="bg-white text-primary-600 hover:bg-gray-100"
+              className="bg-white text-primary-600 hover:bg-gray-100 shadow-large"
               icon={<Heart className="w-5 h-5" />}
             >
               Apply to Volunteer
