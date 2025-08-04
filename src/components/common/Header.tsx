@@ -38,19 +38,19 @@ export const Header = () => {
   };
 
   return (
-    <header 
+    <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled 
-          ? 'bg-white/95 backdrop-blur-md shadow-lg' 
+        scrolled
+          ? 'bg-white/95 backdrop-blur-md shadow-lg'
           : 'bg-white/90 backdrop-blur-sm'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-20"> {/* Increased height */}
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3 group">
-            <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl flex items-center justify-center group-hover:scale-105 transition-transform shadow-lg">
-              <Heart className="w-6 h-6 text-white" />
+            <div className="w-14 h-14 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl flex items-center justify-center group-hover:scale-105 transition-transform shadow-lg">
+              <Heart className="w-7 h-7 text-white" />
             </div>
             <div className="hidden sm:block">
               <h1 className="text-xl font-bold text-gray-900 group-hover:text-primary-600 transition-colors">
@@ -66,7 +66,7 @@ export const Header = () => {
               <Link
                 key={item.name}
                 to={item.href}
-                className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+                className={`px-5 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
                   isActive(item.href)
                     ? 'bg-primary-100 text-primary-700 shadow-sm'
                     : 'text-gray-700 hover:text-primary-600 hover:bg-primary-50'
@@ -103,8 +103,8 @@ export const Header = () => {
                 {/* User Menu */}
                 <div className="relative group">
                   <button className="flex items-center space-x-2 text-sm">
-                    <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center">
-                      <User className="w-4 h-4 text-primary-600" />
+                    <div className="w-9 h-9 bg-primary-100 rounded-full flex items-center justify-center">
+                      <User className="w-5 h-5 text-primary-600" />
                     </div>
                     <span className="hidden md:block font-medium text-gray-700">
                       {user.firstName || 'User'}
@@ -146,7 +146,7 @@ export const Header = () => {
                 </Link>
                 <Link
                   to="/register"
-                  className="bg-primary-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-primary-700 transition-colors"
+                  className="bg-primary-600 text-white px-5 py-2 rounded-md text-sm font-medium hover:bg-primary-700 transition-colors"
                 >
                   Sign Up
                 </Link>
