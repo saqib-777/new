@@ -1,26 +1,20 @@
 import React from 'react';
-import Hero from '../components/home/Hero';
+import { Header } from '../components/layout/Header';
+import { HeroSection } from '../components/layout/HeroSection';
 import { FeaturedAnimals } from '../components/home/FeaturedAnimals';
 import { MissionSection } from '../components/home/MissionSection';
 import { SuccessStories } from '../components/home/SuccessStories';
 import { CallToAction } from '../components/home/CallToAction';
 
-export const HomePage = () => {
-  return (
-    <div className="min-h-screen">
-      <Hero />
-      <FeaturedAnimals />
-      <MissionSection />
-      <SuccessStories />
-      <CallToAction />
-    </div>
-  );
-};
-function HomePage() {
+const HomePage: React.FC = () => {
   return (
     <>
+      {/* Fixed Header */}
       <Header />
-      <div className="pt-20"> {/* Add top padding so header doesn't overlap */}
+
+      {/* Main Content with top padding to avoid overlap */}
+      <div className="pt-20">
+        {/* Hero Section */}
         <HeroSection
           backgroundImage="/images/hero.jpg"
           title="Rescue The Voiceless"
@@ -38,9 +32,15 @@ function HomePage() {
             Donate
           </button>
         </HeroSection>
+
+        {/* Other Sections */}
+        <FeaturedAnimals />
+        <MissionSection />
+        <SuccessStories />
+        <CallToAction />
       </div>
     </>
   );
-}
+};
 
 export default HomePage;
