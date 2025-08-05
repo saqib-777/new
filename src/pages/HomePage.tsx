@@ -16,3 +16,31 @@ export const HomePage = () => {
     </div>
   );
 };
+function HomePage() {
+  return (
+    <>
+      <Header />
+      <div className="pt-20"> {/* Add top padding so header doesn't overlap */}
+        <HeroSection
+          backgroundImage="/images/hero.jpg"
+          title="Rescue The Voiceless"
+          subtitle="Saving lives, one step at a time"
+          statistics={[
+            { label: 'Animals Rescued', value: '500+' },
+            { label: 'Volunteers', value: '150+' },
+            { label: 'Adoptions', value: '300+' },
+          ]}
+        >
+          <button className="bg-primary-600 text-white px-6 py-3 rounded-lg">
+            Adopt Now
+          </button>
+          <button className="bg-white text-primary-600 px-6 py-3 rounded-lg">
+            Donate
+          </button>
+        </HeroSection>
+      </div>
+    </>
+  );
+}
+
+export default HomePage;
