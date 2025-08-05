@@ -137,11 +137,17 @@ export const RescuePage = () => {
               <p className="font-bold text-red-600 text-xl">1122</p>
               <p className="text-sm text-gray-600">Emergency Hotline</p>
             </div>
-            <div className="text-center">
-              <Mail className="w-8 h-8 text-blue-600 mx-auto mb-2" />
-              <p className="font-bold text-blue-600">RescueTheVoiceless07@gmail.com</p>
-              <p className="text-sm text-gray-600">Email Support</p>
-            </div>
+          import { Mail } from "lucide-react";
+
+export default function RescuePage() {
+  return (
+    <div className="text-center">
+      <Mail className="w-8 h-8 text-blue-600 mx-auto mb-2" />
+      <p className="font-bold text-blue-600">RescueTheVoiceless07@gmail.com</p>
+      <p className="text-sm text-gray-600">Email Support</p>
+    </div>
+  );
+}
             <div className="text-center">
               <MessageCircle className="w-8 h-8 text-green-600 mx-auto mb-2" />
               <p className="font-bold text-green-600">+92 339 6063 777</p>
