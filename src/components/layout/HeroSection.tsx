@@ -24,7 +24,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       {/* Background Image */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: url(${backgroundImage}) }}
+style={{ backgroundImage: `url(${backgroundImage})` }}
       />
       
       {/* Overlay */}
