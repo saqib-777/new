@@ -5,7 +5,7 @@ import { Button } from "../components/ui/Button";
 import { Input } from "../components/ui/Input";
 import { useAppStore } from "../store/useAppStore";
 import { AdoptionModal } from "../components/adoption/AdoptionModal";
-import { HeroSection } from "../components/layout/HeroSection"; // ✅ Make sure this path is correct!
+import { HeroSection } from "../components/layout/HeroSection"; // ✅ Same path as HomePage
 
 const mockAnimals = [
   {
@@ -92,24 +92,23 @@ const AdoptPage: React.FC = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* ✅ Hero Section */}
+    <div>
+      {/* ✅ Hero Section (same style as HomePage) */}
       <HeroSection
         backgroundImage="https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop"
         title="Find Your Perfect Companion"
-        subtitle="Every animal deserves a loving home. Browse our available pets and discover your new best friend."
+        subtitle="Browse hundreds of loving pets waiting for a forever home."
       >
         <Button
           size="lg"
           className="bg-primary-600 hover:bg-primary-700 text-white px-8 py-4 text-lg font-semibold"
         >
-          Browse Pets
+          Start Adopting
         </Button>
       </HeroSection>
 
-      {/* ✅ Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Search and Filters */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Search & Filters */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
           <div className="space-y-4">
             {/* Search Bar */}
@@ -131,12 +130,10 @@ const AdoptPage: React.FC = () => {
                 Filters
               </Button>
             </div>
-
-            {/* Filters */}
             {showFilters && (
               <div className="border-t border-gray-200 pt-4">
                 <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-                  {/* Type */}
+                  {/* Type Filter */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                       Type
@@ -159,7 +156,7 @@ const AdoptPage: React.FC = () => {
           </div>
         </div>
 
-        {/* ✅ Animals Grid */}
+        {/* Animals Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {paginatedAnimals.map((animal) => (
             <Card key={animal.id} hover className="group overflow-hidden">
@@ -170,12 +167,11 @@ const AdoptPage: React.FC = () => {
                   className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute top-3 right-3">
-                  <button className="w-10 h-10 bg-white/90 rounded-full flex items-center justify-center hover:bg-white transition-all duration-200 shadow-lg">
+                  <button className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-all duration-200 shadow-lg">
                     <Heart className="w-5 h-5 text-gray-600 hover:text-red-500" />
                   </button>
                 </div>
               </div>
-
               <CardContent className="p-6">
                 <div className="space-y-4">
                   <div>
@@ -230,3 +226,5 @@ const AdoptPage: React.FC = () => {
     </div>
   );
 };
+
+export default AdoptPage; // ✅ Added default export
