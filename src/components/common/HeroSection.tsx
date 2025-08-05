@@ -13,24 +13,29 @@ interface HeroSectionProps {
   overlayOpacity?: number;
 }
 
-export const HeroSection = ({
+export const HeroSection: React.FC<HeroSectionProps> = ({
   backgroundImage,
   title,
   subtitle,
   children,
   statistics,
-  overlayOpacity = 0.5,
-}: HeroSectionProps) => {
+  overlayOpacity = 0.5
+}) => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <div
+      {/* Background Image */}
+      <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${backgroundImage})` }}
       />
-      <div
+      
+      {/* Overlay */}
+      <div 
         className="absolute inset-0 bg-black"
         style={{ opacity: overlayOpacity }}
       />
+      
+      {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -44,6 +49,7 @@ export const HeroSection = ({
           <p className="text-xl md:text-2xl text-white/90 max-w-4xl mx-auto leading-relaxed">
             {subtitle}
           </p>
+
           {children && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -54,6 +60,7 @@ export const HeroSection = ({
               {children}
             </motion.div>
           )}
+
           {statistics && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -66,7 +73,9 @@ export const HeroSection = ({
                   <div className="text-3xl md:text-4xl font-bold text-white mb-2">
                     {stat.value}
                   </div>
-                  <div className="text-white/80 text-lg">{stat.label}</div>
+                  <div className="text-white/80 text-lg">
+                    {stat.label}
+                  </div>
                 </div>
               ))}
             </motion.div>
