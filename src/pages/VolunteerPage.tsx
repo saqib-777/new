@@ -135,7 +135,7 @@ export const VolunteerPage = () => {
       {/* HERO */}
       <div className="relative bg-cover bg-center h-[500px]" style={{ backgroundImage: 'url(https://images.pexels.com/photos/6816869/pexels-photo-6816869.jpeg)' }}>
         <div className="absolute inset-0 bg-gradient-to-r from-primary-600/80 to-secondary-600/80" />
-        <div className="relative z-10 text-center text-white py-20">
+  <div className="relative z-10 text-center text-white pt-32 pb-20">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Join Our Volunteer Team</h1>
           <p className="text-lg max-w-2xl mx-auto mb-6">Make a difference in the lives of rescued animals. Be part of our compassionate community.</p>
           <Button size="lg" className="bg-white text-primary-600 hover:bg-gray-100" onClick={() => setShowApplication(true)}>
