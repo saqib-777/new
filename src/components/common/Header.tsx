@@ -13,7 +13,6 @@ export const Header = () => {
 
   const navigation = [
     { name: 'Home', href: '/' },
-    { name: 'About', href: '/about' },
     { name: 'Adopt', href: '/adopt' },
     { name: 'Rescue', href: '/rescue' },
     { name: 'Donate', href: '/donate' },
@@ -51,13 +50,8 @@ export const Header = () => {
             </div>
             <div className="hidden sm:block">
               <h1 className="text-xl font-bold text-gray-900 group-hover:text-primary-600 transition-colors">
-                Rescue The Voiceless
-              </h1>
-              <p className="text-xs text-gray-600">Saving Lives, One Rescue at a Time</p>
-            </div>
-          </Link>
-
-          {/* Desktop Navigation */}
+                Rescue The Voiceless  
+        {/* Desktop Navigation */}
           <nav className="hidden lg:flex space-x-1">
             {navigation.map((item) => (
               <Link
