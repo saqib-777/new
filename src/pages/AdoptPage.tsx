@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { Search, Filter, Heart, Clock, MapPin, Star } from "lucide-react";
+import { Search, Filter, Heart, Clock, MapPin } from "lucide-react";
 import { Card, CardContent } from "../components/ui/Card";
 import { Button } from "../components/ui/Button";
 import { Input } from "../components/ui/Input";
 import { useAppStore } from "../store/useAppStore";
 import { AdoptionModal } from "../components/adoption/AdoptionModal";
-import { HeroSection } from "../components/ui/HeroSection";
+import { HeroSection } from "../components/layout/HeroSection"; // ✅ Make sure this path is correct!
 
 const mockAnimals = [
   {
@@ -55,7 +55,7 @@ const mockAnimals = [
   },
 ];
 
-export const AdoptPage: React.FC = () => {
+const AdoptPage: React.FC = () => {
   const { searchFilters, updateSearchFilters } = useAppStore();
   const [showFilters, setShowFilters] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -95,12 +95,20 @@ export const AdoptPage: React.FC = () => {
     <div className="min-h-screen bg-gray-50">
       {/* ✅ Hero Section */}
       <HeroSection
+        backgroundImage="https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop"
         title="Find Your Perfect Companion"
         subtitle="Every animal deserves a loving home. Browse our available pets and discover your new best friend."
-        backgroundImage="https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&w=1920&h=600&fit=crop"
-      />
+      >
+        <Button
+          size="lg"
+          className="bg-primary-600 hover:bg-primary-700 text-white px-8 py-4 text-lg font-semibold"
+        >
+          Browse Pets
+        </Button>
+      </HeroSection>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {/* ✅ Main Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Search and Filters */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
           <div className="space-y-4">
@@ -151,7 +159,7 @@ export const AdoptPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Animals Grid */}
+        {/* ✅ Animals Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {paginatedAnimals.map((animal) => (
             <Card key={animal.id} hover className="group overflow-hidden">
@@ -161,10 +169,8 @@ export const AdoptPage: React.FC = () => {
                   alt={animal.name}
                   className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-
-                {/* Favorite Button */}
                 <div className="absolute top-3 right-3">
-                  <button className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-all duration-200 shadow-lg">
+                  <button className="w-10 h-10 bg-white/90 rounded-full flex items-center justify-center hover:bg-white transition-all duration-200 shadow-lg">
                     <Heart className="w-5 h-5 text-gray-600 hover:text-red-500" />
                   </button>
                 </div>
@@ -178,7 +184,6 @@ export const AdoptPage: React.FC = () => {
                     </h3>
                     <p className="text-gray-600">{animal.breed}</p>
                   </div>
-
                   <div className="grid grid-cols-2 gap-4 text-sm text-gray-500">
                     <div className="flex items-center space-x-1">
                       <Clock className="w-4 h-4" />
@@ -189,7 +194,6 @@ export const AdoptPage: React.FC = () => {
                       <span>{animal.location}</span>
                     </div>
                   </div>
-
                   <div className="flex items-center justify-between pt-4 border-t border-gray-200">
                     <span className="text-lg font-bold text-primary-600">
                       Rs. {animal.adoptionFee.toLocaleString()}
@@ -226,3 +230,5 @@ export const AdoptPage: React.FC = () => {
     </div>
   );
 };
+
+export default AdoptPage;
