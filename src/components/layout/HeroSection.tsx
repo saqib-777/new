@@ -1,6 +1,5 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-
 interface HeroSectionProps {
   backgroundImage: string;
   title: string;
@@ -12,7 +11,6 @@ interface HeroSectionProps {
   }[];
   overlayOpacity?: number;
 }
-
 export const HeroSection: React.FC<HeroSectionProps> = ({
   backgroundImage,
   title,
@@ -26,7 +24,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       {/* Background Image */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${backgroundImage})` }}
+        style={{ backgroundImage: url(${backgroundImage}) }}
       />
       
       {/* Overlay */}
@@ -87,7 +85,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           )}
         </motion.div>
       </div>
-      
       {/* Scroll Indicator */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
         <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
@@ -96,4 +93,4 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       </div>
     </section>
   );
-};
+}; 
