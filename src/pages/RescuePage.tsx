@@ -141,13 +141,31 @@ export const RescuePage = () => {
 
 export default function RescuePage() {
   return (
-    <div className="text-center">
-      <Mail className="w-8 h-8 text-blue-600 mx-auto mb-2" />
-      <p className="font-bold text-blue-600">RescueTheVoiceless07@gmail.com</p>
-      <p className="text-sm text-gray-600">Email Support</p>
-    </div>
+    <section className="flex justify-center items-center min-h-screen bg-gray-100">
+      <div className="bg-white shadow-lg rounded-lg p-8 max-w-md text-center">
+        {/* Email Icon */}
+        <Mail className="w-12 h-12 text-blue-600 mx-auto mb-4" />
+
+        {/* Email Text */}
+        <p className="text-xl font-bold text-blue-600">
+          RescueTheVoiceless07@gmail.com
+        </p>
+
+        {/* Subtitle */}
+        <p className="text-gray-600 mt-2 text-sm">Email Support</p>
+
+        {/* Optional Button */}
+        <a
+          href="mailto:RescueTheVoiceless07@gmail.com"
+          className="inline-block mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+        >
+          Send Email
+        </a>
+      </div>
+    </section>
   );
 }
+
             <div className="text-center">
               <MessageCircle className="w-8 h-8 text-green-600 mx-auto mb-2" />
               <p className="font-bold text-green-600">+92 339 6063 777</p>
