@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Phone, Mail, MapPin, Clock, MessageCircle } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
@@ -39,12 +40,10 @@ export const ContactPage = () => {
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true);
     try {
-      // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      toast.success('Message sent successfully! We\'ll get back to you soon.');
+      toast.success("Message sent successfully! We'll get back to you soon.");
       reset();
-    } catch (error) {
+    } catch {
       toast.error('Failed to send message. Please try again.');
     } finally {
       setIsSubmitting(false);
@@ -52,227 +51,175 @@ export const ContactPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div 
-        className="relative bg-cover bg-center bg-no-repeat"
+    <div className="bg-gray-50">
+      {/* HERO */}
+      <div
+        className="relative bg-cover bg-center h-[400px]"
         style={{
-          backgroundImage: 'url(https://images.pexels.com/photos/6235233/pexels-photo-6235233.jpeg?auto=compress&cs=tinysrgb&w=1920&h=600&fit=crop)'
+          backgroundImage: 'url(https://images.pexels.com/photos/6235233/pexels-photo-6235233.jpeg)'
         }}
       >
-        <div className="absolute inset-0 bg-black/50" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="relative z-10 text-center">
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
-              Get in Touch
-            </h1>
-            <p className="text-lg text-white/90 max-w-2xl mx-auto">
-              Have questions about adoption, volunteering, or need help with a rescue? 
-              We're here to help and would love to hear from you.
-            </p>
-          </div>
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-700/70 to-secondary-700/70" />
+        <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-4">
+          <motion.h1
+            initial={{ opacity: 0, y: -30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-4xl md:text-5xl font-bold mb-4"
+          >
+            Get in Touch
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+            className="text-lg max-w-2xl"
+          >
+            Have questions about adoption, volunteering, or need help with a rescue? We’re here to help and would love to hear from you.
+          </motion.p>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Contact Form */}
-          <div className="lg:col-span-2">
-            <Card>
-              <CardHeader>
-                <CardTitle>Send us a Message</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                  {/* Basic Info */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <Input
-                      label="Your Name *"
-                      {...register('name')}
-                      error={errors.name?.message}
-                    />
-                    <Input
-                      label="Email Address *"
-                      type="email"
-                      {...register('email')}
-                      error={errors.email?.message}
-                    />
-                  </div>
+      {/* CONTACT CONTENT */}
+      <div className="max-w-7xl mx-auto px-4 py-16 grid grid-cols-1 lg:grid-cols-3 gap-10">
+        {/* FORM */}
+        <motion.div
+          initial={{ opacity: 0, x: -40 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="lg:col-span-2"
+        >
+          <Card className="shadow-lg">
+            <CardHeader>
+              <CardTitle>Send Us a Message</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <Input label="Your Name *" {...register('name')} error={errors.name?.message} />
+                  <Input label="Email Address *" type="email" {...register('email')} error={errors.email?.message} />
+                </div>
 
-                  <Input
-                    label="Phone Number (Optional)"
-                    {...register('phone')}
-                  />
+                <Input label="Phone Number (Optional)" {...register('phone')} />
 
-                  {/* Message Type and Urgency */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Message Type
-                      </label>
-                      <select
-                        {...register('messageType')}
-                        className="w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
-                      >
-                        <option value="general">General Inquiry</option>
-                        <option value="adoption">Adoption Question</option>
-                        <option value="volunteer">Volunteer Inquiry</option>
-                        <option value="donation">Donation Question</option>
-                        <option value="rescue">Rescue Related</option>
-                        <option value="complaint">Complaint</option>
-                      </select>
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Urgency Level
-                      </label>
-                      <select
-                        {...register('urgencyLevel')}
-                        className="w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
-                      >
-                        <option value="low">Low Priority</option>
-                        <option value="medium">Medium Priority</option>
-                        <option value="high">High Priority</option>
-                        <option value="emergency">Emergency</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <Input
-                    label="Subject *"
-                    {...register('subject')}
-                    error={errors.subject?.message}
-                  />
-
+                {/* Message Type & Urgency */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Message *
-                    </label>
-                    <textarea
-                      {...register('message')}
-                      rows={6}
-                      className="w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
-                      placeholder="Please provide details about your inquiry..."
-                    />
-                    {errors.message && (
-                      <p className="mt-1 text-sm text-red-600">{errors.message.message}</p>
-                    )}
+                    <label className="block text-sm font-medium mb-2">Message Type</label>
+                    <select
+                      {...register('messageType')}
+                      className="w-full rounded-md border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500"
+                    >
+                      <option value="general">General Inquiry</option>
+                      <option value="adoption">Adoption Question</option>
+                      <option value="volunteer">Volunteer Inquiry</option>
+                      <option value="donation">Donation Question</option>
+                      <option value="rescue">Rescue Related</option>
+                      <option value="complaint">Complaint</option>
+                    </select>
                   </div>
-
-                  <Button
-                    type="submit"
-                    loading={isSubmitting}
-                    className="w-full"
-                    size="lg"
-                    icon={<MessageCircle className="w-5 h-5" />}
-                  >
-                    Send Message
-                  </Button>
-                </form>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Contact Information */}
-          <div className="space-y-6">
-            {/* Office Hours */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Office Hours</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  <div className="flex items-center space-x-3">
-                    <Clock className="w-5 h-5 text-gray-400" />
-                    <div>
-                      <p className="font-medium text-gray-900">Monday - Friday</p>
-                      <p className="text-sm text-gray-600">9:00 AM - 6:00 PM</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center space-x-3">
-                    <Clock className="w-5 h-5 text-gray-400" />
-                    <div>
-                      <p className="font-medium text-gray-900">Saturday</p>
-                      <p className="text-sm text-gray-600">10:00 AM - 4:00 PM</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center space-x-3">
-                    <Clock className="w-5 h-5 text-gray-400" />
-                    <div>
-                      <p className="font-medium text-gray-900">Sunday</p>
-                      <p className="text-sm text-gray-600">Closed</p>
-                    </div>
-                  </div>
-                  
-                  <div className="mt-4 p-3 bg-red-50 rounded-lg">
-                    <p className="text-sm font-medium text-red-800">
-                      Emergency Rescue: 24/7
-                    </p>
-                    <p className="text-sm text-red-600">
-                      Call +92 311 RESCUE for emergencies
-                    </p>
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Urgency Level</label>
+                    <select
+                      {...register('urgencyLevel')}
+                      className="w-full rounded-md border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500"
+                    >
+                      <option value="low">Low Priority</option>
+                      <option value="medium">Medium Priority</option>
+                      <option value="high">High Priority</option>
+                      <option value="emergency">Emergency</option>
+                    </select>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
 
-            {/* Contact Details */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Contact Information</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="flex items-center space-x-3">
-                    <Phone className="w-5 h-5 text-primary-600" />
-                    <div>
-                      <p className="font-medium text-gray-900">Phone</p>
-                      <p className="text-gray-600">+92 300 1234567</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center space-x-3">
-                    <Mail className="w-5 h-5 text-primary-600" />
-                    <div>
-                      <p className="font-medium text-gray-900">Email</p>
-                      <p className="text-gray-600">info@rescuethevoiceless.org</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start space-x-3">
-                    <MapPin className="w-5 h-5 text-primary-600 mt-0.5" />
-                    <div>
-                      <p className="font-medium text-gray-900">Address</p>
-                      <p className="text-gray-600">
-                        123 Rescue Street<br />
-                        Lahore, Punjab 54000<br />
-                        Pakistan
-                      </p>
-                    </div>
-                  </div>
+                <Input label="Subject *" {...register('subject')} error={errors.subject?.message} />
+
+                <div>
+                  <label className="block text-sm font-medium mb-2">Message *</label>
+                  <textarea
+                    {...register('message')}
+                    rows={6}
+                    placeholder="Please provide details about your inquiry..."
+                    className="w-full rounded-md border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500"
+                  />
+                  {errors.message && <p className="mt-1 text-sm text-red-600">{errors.message.message}</p>}
                 </div>
-              </CardContent>
-            </Card>
 
-            {/* FAQ Link */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Need Quick Answers?</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600 mb-4">
-                  Check out our frequently asked questions for immediate answers to common inquiries.
-                </p>
-                <Button variant="outline" className="w-full">
-                  View FAQ
+                <Button type="submit" size="lg" loading={isSubmitting} icon={<MessageCircle className="w-5 h-5" />} className="w-full">
+                  Send Message
                 </Button>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
+              </form>
+            </CardContent>
+          </Card>
+        </motion.div>
+
+        {/* CONTACT INFO */}
+        <motion.div
+          initial={{ opacity: 0, x: 40 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="space-y-6"
+        >
+          {/* Office Hours */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Office Hours</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3 text-gray-700">
+              <div className="flex items-center space-x-3">
+                <Clock className="w-5 h-5 text-gray-400" />
+                <div>
+                  <p className="font-medium">Mon - Fri: 9 AM - 6 PM</p>
+                  <p className="text-sm">Saturday: 10 AM - 4 PM</p>
+                </div>
+              </div>
+              <div className="p-3 bg-red-50 rounded-lg text-sm text-red-700 font-medium">
+                Emergency Rescue 24/7: 11 22 RESCUE
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Contact Details */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Contact Information</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="flex items-center space-x-3">
+                <Phone className="w-5 h-5 text-primary-600" />
+                <div>
+                  <p className="font-medium">Phone</p>
+                  <p>+92 339 6063777</p>
+                </div>
+              </div>
+              <div className="flex items-center space-x-3">
+                <Mail className="w-5 h-5 text-primary-600" />
+                <div>
+                  <p className="font-medium">Email</p>
+                  <p>RescueTheVoiceless07@gmail.com</p>
+                </div>
+              </div>
+              <div className="flex items-start space-x-3">
+                <MapPin className="w-5 h-5 text-primary-600 mt-0.5" />
+                <div>
+                  <p className="font-medium">Address</p>
+                  <p>UVAS, Outfall Rd, Data Gunj Buksh Town, Lahore, 54000 , Punjab, Pakistan</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+      </div>
+
+      {/* CALL TO ACTION */}
+      <div className="bg-primary-600 text-white py-10 text-center">
+        <h2 className="text-3xl font-bold mb-4">Need Immediate Assistance?</h2>
+        <p className="text-lg mb-6">Our team is ready to respond to emergencies 24/7.</p>
+        <Button size="lg" variant="secondary" className="bg-white text-primary-600 hover:bg-gray-100">
+          Call Now: 11 22 RESCUE
+        </Button>
       </div>
     </div>
   );
