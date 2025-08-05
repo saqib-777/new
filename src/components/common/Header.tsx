@@ -24,9 +24,7 @@ export const Header = () => {
   const unreadCount = notifications.filter(n => !n.read).length;
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -87,7 +85,7 @@ export const Header = () => {
               <span>Emergency: 1122</span>
             </a>
 
-            {user ? (
+            {user && (
               <>
                 {/* Notifications */}
                 <button className="relative p-2 text-gray-400 hover:text-gray-500 transition-colors">
@@ -135,21 +133,6 @@ export const Header = () => {
                   </div>
                 </div>
               </>
-            ) : (
-              <div className="flex items-center space-x-2">
-                <Link
-                  to="/login"
-                  className="text-sm font-medium text-gray-700 hover:text-primary-600 transition-colors"
-                >
-                  Sign In
-                </Link>
-                <Link
-                  to="/register"
-                  className="bg-primary-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-primary-700 transition-colors"
-                >
-                  Sign Up
-                </Link>
-              </div>
             )}
 
             {/* Mobile menu button */}
@@ -197,25 +180,6 @@ export const Header = () => {
                 <span>Emergency: 1122</span>
               </a>
             </div>
-
-            {!user && (
-              <div className="mt-4 pt-4 border-t border-gray-200 space-y-2">
-                <Link
-                  to="/login"
-                  className="block text-center py-2 text-sm font-medium text-gray-700"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Sign In
-                </Link>
-                <Link
-                  to="/register"
-                  className="block text-center bg-primary-600 text-white py-2 rounded-md text-sm font-medium hover:bg-primary-700"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Sign Up
-                </Link>
-              </div>
-            )}
           </div>
         )}
       </div>
