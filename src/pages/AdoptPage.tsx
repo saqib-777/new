@@ -1,24 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { HeroSection } from '../components/HeroSection'; // ✅ Added
+import { useAppStore } from '../store/useAppStore';
+import { Search, Filter, Heart, Clock, MapPin, Star } from 'lucide-react';
+import { Card, CardContent } from '../components/ui/Card';
+import { Button } from '../components/ui/Button';
+import { Input } from '../components/ui/Input';
+import { AdoptionModal } from '../components/adoption/AdoptionModal';
 
-interface HeroSectionProps {
-  title: string;
-  subtitle: string;
-  backgroundImage: string;
-}
+export const AdoptPage = () => {
+  const { searchFilters, updateSearchFilters } = useAppStore();
+  const [showFilters, setShowFilters] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedAnimal, setSelectedAnimal] = useState<any>(null);
+  const [showAdoptionModal, setShowAdoptionModal] = useState(false);
+  const animalsPerPage = 12;
 
-export const HeroSection: React.FC<HeroSectionProps> = ({ title, subtitle, backgroundImage }) => {
+  // ✅ Hero Section Added
   return (
-    <div 
-      className="relative bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: `url(${backgroundImage})` }}
-    >
-      <div className="absolute inset-0 bg-black/50" />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="relative z-10 text-center">
-          <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">{title}</h1>
-          <p className="text-lg text-white/90 max-w-2xl mx-auto">{subtitle}</p>
-        </div>
-      </div>
-    </div>
-  );
-};
+    <div className="min-h-screen bg-gray-50">
+      <HeroSection
+        title="Find Your Perfect Companion"
+        subtitle="Every animal deserves a loving home. Browse our available pets and discover your new best friend."
+        backgroundImage="https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&w=1920&h=600&fit=crop"
+      />
