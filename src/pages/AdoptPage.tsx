@@ -226,3 +226,5 @@ const AdoptPage: React.FC = () => {
     </div>
   );
 };
+
+export default AdoptPage; // ✅ Added default export
