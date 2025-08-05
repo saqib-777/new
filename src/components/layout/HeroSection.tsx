@@ -1,4 +1,5 @@
 import React from 'react';
+import { HeroSection } from "../components/layout/HeroSection";
 import { motion } from 'framer-motion';
 interface HeroSectionProps {
   backgroundImage: string;
