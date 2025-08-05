@@ -9,12 +9,8 @@ import { CallToAction } from '../components/home/CallToAction';
 const HomePage: React.FC = () => {
   return (
     <>
-      {/* Fixed Header */}
       <Header />
-
-      {/* Main Content with top padding to avoid overlap */}
       <div className="pt-20">
-        {/* Hero Section */}
         <HeroSection
           backgroundImage="/images/hero.jpg"
           title="Rescue The Voiceless"
@@ -33,7 +29,6 @@ const HomePage: React.FC = () => {
           </button>
         </HeroSection>
 
-        {/* Other Sections */}
         <FeaturedAnimals />
         <MissionSection />
         <SuccessStories />
