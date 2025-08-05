@@ -6,11 +6,12 @@ import { AuthProvider } from './hooks/useAuth';
 import { Header } from './components/layout/Header';
 import { Footer } from './components/common/Footer';
 import { HomePage } from './pages/HomePage';
-import { AdoptPage } from './pages/AdoptPage';
+import AdoptPage from "./pages/AdoptPage";
 import { RescuePage } from './pages/RescuePage';
 import { DonatePage } from './pages/DonatePage';
 import { VolunteerPage } from './pages/VolunteerPage';
 import { ContactPage } from './pages/ContactPage';
+
 
 const queryClient = new QueryClient({
   defaultOptions: {
