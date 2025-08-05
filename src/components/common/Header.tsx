@@ -20,7 +20,7 @@ export const Header = () => {
     { name: 'Contact', href: '/contact' },
   ];
 
-  const unreadCount = notifications.filter(n => !n.read).length;
+  const unreadCount = notifications.filter((n) => !n.read).length;
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -52,7 +52,9 @@ export const Header = () => {
               <h1 className="text-xl font-bold text-gray-900 group-hover:text-primary-600 transition-colors">
                 Rescue The Voiceless
               </h1>
-              <p className="text-xs text-gray-600">Saving Lives, One Rescue at a Time</p>
+              <p className="text-xs text-gray-600">
+                Saving Lives, One Rescue at a Time
+              </p>
             </div>
           </Link>
 
@@ -73,9 +75,8 @@ export const Header = () => {
             ))}
           </nav>
 
-          {/* Emergency Button & User Actions */}
+          {/* Emergency Button */}
           <div className="flex items-center space-x-4">
-            {/* Emergency Button */}
             <a
               href="tel:1122"
               className="hidden md:flex items-center space-x-2 bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg text-sm font-bold transition-all duration-200 shadow-lg hover:shadow-xl animate-pulse"
@@ -86,7 +87,6 @@ export const Header = () => {
 
             {user && (
               <>
-                {/* Notifications */}
                 <button className="relative p-2 text-gray-400 hover:text-gray-500 transition-colors">
                   <Bell className="w-5 h-5" />
                   {unreadCount > 0 && (
@@ -96,7 +96,6 @@ export const Header = () => {
                   )}
                 </button>
 
-                {/* User Menu */}
                 <div className="relative group">
                   <button className="flex items-center space-x-2 text-sm">
                     <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center">
@@ -106,8 +105,6 @@ export const Header = () => {
                       {user.firstName || 'User'}
                     </span>
                   </button>
-
-                  {/* Dropdown */}
                   <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                     <div className="py-1">
                       <Link
@@ -134,7 +131,6 @@ export const Header = () => {
               </>
             )}
 
-            {/* Mobile menu button */}
             <button
               className="lg:hidden p-2 text-gray-400 hover:text-gray-500 transition-colors"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -147,40 +143,6 @@ export const Header = () => {
             </button>
           </div>
         </div>
-
-        {/* Mobile Navigation */}
-        {mobileMenuOpen && (
-          <div className="lg:hidden border-t border-gray-200 py-4 animate-slide-up">
-            <nav className="space-y-2">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  className={`block px-3 py-2 text-base font-medium rounded-md transition-colors ${
-                    isActive(item.href)
-                      ? 'bg-primary-100 text-primary-700'
-                      : 'text-gray-700 hover:text-primary-600 hover:bg-primary-50'
-                  }`}
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {item.name}
-                </Link>
-              ))}
-            </nav>
-
-            {/* Mobile Emergency Button */}
-            <div className="mt-4 pt-4 border-t border-gray-200">
-              <a
-                href="tel:1122"
-                className="flex items-center justify-center space-x-2 bg-red-600 text-white py-3 rounded-md font-semibold"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <Phone className="w-5 h-5" />
-                <span>Emergency: 1122</span>
-              </a>
-            </div>
-          </div>
-        )}
       </div>
     </header>
   );
