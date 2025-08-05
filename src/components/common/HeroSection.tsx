@@ -24,17 +24,17 @@ export const HeroSection = ({
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image */}
-      <div 
+      <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${backgroundImage})` }}
       />
-      
+
       {/* Overlay */}
-      <div 
+      <div
         className="absolute inset-0 bg-black"
         style={{ opacity: overlayOpacity }}
       />
-      
+
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <motion.div
@@ -43,17 +43,14 @@ export const HeroSection = ({
           transition={{ duration: 0.8 }}
           className="space-y-8"
         >
-          {/* Title */}
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight">
             {title}
           </h1>
-          
-          {/* Subtitle */}
+
           <p className="text-xl md:text-2xl text-white/90 max-w-4xl mx-auto leading-relaxed">
             {subtitle}
           </p>
-          
-          {/* Action Buttons */}
+
           {children && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -64,8 +61,7 @@ export const HeroSection = ({
               {children}
             </motion.div>
           )}
-          
-          {/* Statistics */}
+
           {statistics && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -78,16 +74,14 @@ export const HeroSection = ({
                   <div className="text-3xl md:text-4xl font-bold text-white mb-2">
                     {stat.value}
                   </div>
-                  <div className="text-white/80 text-lg">
-                    {stat.label}
-                  </div>
+                  <div className="text-white/80 text-lg">{stat.label}</div>
                 </div>
               ))}
             </motion.div>
           )}
         </motion.div>
       </div>
-      
+
       {/* Scroll Indicator */}
       <motion.div
         initial={{ opacity: 0 }}
