@@ -7,7 +7,7 @@ import { useAppStore } from '../../store/useAppStore';
 export const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { user, signOut } = useAuth();
+  const { user } = useAuth();
   const { notifications } = useAppStore();
   const location = useLocation();
 
@@ -73,16 +73,19 @@ export const Header: React.FC = () => {
             ))}
           </nav>
 
-          {/* Emergency Button */}
+          {/* Right Side Actions */}
           <div className="flex items-center space-x-4">
+            {/* Emergency Button */}
             <a
               href="tel:1122"
-              className="hidden md:flex items-center space-x-2 bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg text-sm font-bold transition-all duration-200 shadow-lg hover:shadow-xl animate-pulse"
+              className="flex items-center space-x-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 md:px-6 md:py-3 rounded-lg text-sm font-bold transition-all duration-200 shadow-lg hover:shadow-xl animate-pulse"
             >
               <Zap className="w-4 h-4" />
-              <span>Emergency: 1122</span>
+              <span className="hidden sm:inline">Emergency: 1122</span>
+              <span className="sm:hidden">1122</span>
             </a>
 
+            {/* User Actions - Only show if logged in */}
             {user && (
               <>
                 <button className="relative p-2 text-gray-400 hover:text-gray-500 transition-colors">
@@ -100,7 +103,7 @@ export const Header: React.FC = () => {
                       <User className="w-4 h-4 text-primary-600" />
                     </div>
                     <span className="hidden md:block font-medium text-gray-700">
-                      {user.firstName || 'User'}
+                      {user.email?.split('@')[0] || 'User'}
                     </span>
                   </button>
 
@@ -119,7 +122,7 @@ export const Header: React.FC = () => {
                         Profile
                       </Link>
                       <button
-                        onClick={signOut}
+                        onClick={() => {/* Add signOut logic */}}
                         className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
                       >
                         Sign Out
@@ -159,17 +162,6 @@ export const Header: React.FC = () => {
                 </Link>
               ))}
             </nav>
-
-            <div className="mt-4 pt-4 border-t border-gray-200">
-              <a
-                href="tel:1122"
-                className="flex items-center justify-center space-x-2 bg-red-600 text-white py-3 rounded-md font-semibold"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <Phone className="w-5 h-5" />
-                <span>Emergency: 1122</span>
-              </a>
-            </div>
           </div>
         )}
       </div>
