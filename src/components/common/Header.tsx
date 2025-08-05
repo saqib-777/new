@@ -50,8 +50,13 @@ export const Header = () => {
             </div>
             <div className="hidden sm:block">
               <h1 className="text-xl font-bold text-gray-900 group-hover:text-primary-600 transition-colors">
-                Rescue The Voiceless  
-        {/* Desktop Navigation */}
+                Rescue The Voiceless
+              </h1>
+              <p className="text-xs text-gray-600">Saving Lives, One Rescue at a Time</p>
+            </div>
+          </Link>
+
+          {/* Desktop Navigation */}
           <nav className="hidden lg:flex space-x-1">
             {navigation.map((item) => (
               <Link
