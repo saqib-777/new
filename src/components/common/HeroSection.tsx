@@ -19,23 +19,18 @@ export const HeroSection = ({
   subtitle,
   children,
   statistics,
-  overlayOpacity = 0.5
+  overlayOpacity = 0.5,
 }: HeroSectionProps) => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Image */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${backgroundImage})` }}
       />
-
-      {/* Overlay */}
       <div
         className="absolute inset-0 bg-black"
         style={{ opacity: overlayOpacity }}
       />
-
-      {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -46,11 +41,9 @@ export const HeroSection = ({
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight">
             {title}
           </h1>
-
           <p className="text-xl md:text-2xl text-white/90 max-w-4xl mx-auto leading-relaxed">
             {subtitle}
           </p>
-
           {children && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -61,7 +54,6 @@ export const HeroSection = ({
               {children}
             </motion.div>
           )}
-
           {statistics && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -81,22 +73,6 @@ export const HeroSection = ({
           )}
         </motion.div>
       </div>
-
-      {/* Scroll Indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1 }}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-      >
-        <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
-          <motion.div
-            animate={{ y: [0, 12, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
-            className="w-1 h-3 bg-white/70 rounded-full mt-2"
-          />
-        </div>
-      </motion.div>
     </section>
   );
 };
