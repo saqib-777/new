@@ -81,7 +81,7 @@ export const Header: React.FC = () => {
               className="flex items-center space-x-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 md:px-6 md:py-3 rounded-lg text-sm font-bold transition-all duration-200 shadow-lg hover:shadow-xl animate-pulse"
             >
               <Zap className="w-4 h-4" />
-              <span className="hidden sm:inline">Emergency: 1122</span>
+              <span className="hidden sm:inline">Emergency: 042-99213938 </span>
               <span className="sm:hidden">1122</span>
             </a>
 
